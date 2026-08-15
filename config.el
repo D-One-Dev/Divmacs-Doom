@@ -152,15 +152,12 @@
         x-meta-keysym 'super))
 
 ;; ---------------------------------------------------------
-;; Familiar shortcuts
+;; Convenient shortcuts
 ;; ---------------------------------------------------------
 (map! "s-c" #'kill-ring-save
       "s-v" #'yank
       "s-x" #'kill-region
       "s-a" #'mark-whole-buffer
-
-      "s-f" #'isearch-forward
-
       "s-r" #'query-replace
       "s-z" #'undo
       "s-s" #'save-buffer
@@ -169,7 +166,8 @@
       "s-\\" #'my/snap-buffer
       "s-<up>" #'drag-stuff-up
       "s-<down>" #'drag-stuff-down
-      "M-~" #'eval-buffer)
+      "M-~" #'eval-buffer
+      "C-m" #'magit)
 
 ;; Cmd+Q closes the client frame without the "Close frame?" prompt. Calling
 ;; `delete-frame' directly (not via the `[remap delete-frame]' keybinding)
@@ -230,7 +228,8 @@
 (after! treemacs
   (setq treemacs-is-never-other-window t
         treemacs-width 20
-        treemacs-position 'left)
+        treemacs-position 'left
+        treemacs-indentation 1)
 
   (defun my/treemacs-ignore-meta-files-p (filename _path)
     (string-suffix-p ".meta" filename))
@@ -255,12 +254,33 @@
           (treemacs--do-refresh (current-buffer) 'all))))
     (message "Unity .meta files are now %s in treemacs."
              (if (memq #'my/treemacs-ignore-meta-files-p treemacs-ignored-file-predicates)
-                 "hidden" "visible")))
-  ;; :leader
-  (add-hook 'treemacs-mode-hook (lambda () (display-line-numbers-mode -1))))
+                 "hidden" "visible"))))
+
+(add-hook! 'treemacs-mode-hook (display-line-numbers-mode -1))
 
 (add-hook! 'window-setup-hook #'+treemacs/toggle)
 (map! "C-t" #'treemacs)
+
+;; ---------------------------------------------------------
+;; Tabs grouping behaviour
+;; ---------------------------------------------------------
+(after! centaur-tabs
+  (defun centaur-tabs-buffer-groups ()
+    (list
+     (cond
+      ((or (string-equal "*" (substring (buffer-name) 0 1))
+           (memq major-mode '(magit-process-mode
+                              magit-status-mode
+                              magit-diff-mode
+                              magit-log-mode
+                              magit-file-mode
+                              magit-blob-mode
+                              magit-blame-mode
+                              dired-mode
+                              eshell-mode
+                              helmet-mode)))
+       "Emacs")
+      (t "Default")))))
 
 ;; ---------------------------------------------------------
 ;; Multiple cursors + mouse support
