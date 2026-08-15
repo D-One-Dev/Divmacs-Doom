@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|FixedUpdate
+# key: fixedupdate
+# --
+private void FixedUpdate()
+{
+    $0
+}

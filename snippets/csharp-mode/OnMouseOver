@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnMouseOver
+# key: onmouseover
+# --
+private void OnMouseOver()
+{
+    $0
+}

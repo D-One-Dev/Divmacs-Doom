@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnMouseDown
+# key: onmousedown
+# --
+private void OnMouseDown()
+{
+    $0
+}

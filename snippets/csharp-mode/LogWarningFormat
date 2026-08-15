@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Unity|LogWarningFormat
+# key: logwarningformat
+# --
+Debug.LogWarningFormat($0);

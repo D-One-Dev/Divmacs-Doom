@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnCollisionStay2D
+# key: oncollisionstay2d
+# --
+private void OnCollisionStay2D(Collision2D other)
+{
+    $0
+}

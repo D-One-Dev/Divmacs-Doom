@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnTriggerEnter2D
+# key: ontriggerenter2d
+# --
+private void OnTriggerEnter2D(Collider2D other)
+{
+    $0
+}

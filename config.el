@@ -118,7 +118,7 @@
       mouse-wheel-scroll-amount '(3 ((shift) . hscroll))
       mouse-wheel-progressive-speed nil
       mouse-wheel-tilt-scroll t
-      mouse-wheel-scroll-amount-horizontal 4)
+      mouse-wheel-scroll-amount-horizontal 2)
 
 ;; History
 (add-to-list 'savehist-additional-variables 'kill-ring)
@@ -167,7 +167,7 @@
       "s-<up>" #'drag-stuff-up
       "s-<down>" #'drag-stuff-down
       "M-~" #'eval-buffer
-      "C-m" #'magit)
+      "s-m" #'magit)
 
 ;; Cmd+Q closes the client frame without the "Close frame?" prompt. Calling
 ;; `delete-frame' directly (not via the `[remap delete-frame]' keybinding)

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnTriggerExit2D
+# key: ontriggerexit2d
+# --
+private void OnTriggerExit2D(Collider2D other)
+{
+    $0
+}

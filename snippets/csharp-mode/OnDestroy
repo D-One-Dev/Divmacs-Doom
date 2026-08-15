@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnDestroy
+# key: ondestroy
+# --
+private void OnDestroy()
+{
+    $0
+}

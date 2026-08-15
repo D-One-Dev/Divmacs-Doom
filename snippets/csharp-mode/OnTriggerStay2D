@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnTriggerStay2D
+# key: ontriggerstay2d
+# --
+private void OnTriggerStay2D(Collider2D other)
+{
+    $0
+}

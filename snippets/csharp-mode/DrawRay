@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Unity|DrawRay
+# key: drawray
+# --
+Debug.DrawRay(Vector3 start$1, Vector3 dir$2, Color color = Color.white$3, float duration = 0.0f$4, bool depthTest = true$5);
+$0

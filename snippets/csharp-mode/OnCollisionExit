@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnCollisionExit
+# key: oncollisionexit
+# --
+private void OnCollisionExit(Collision other)
+{
+    $0
+}

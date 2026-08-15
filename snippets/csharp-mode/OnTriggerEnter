@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnTriggerEnter
+# key: ontriggerenter
+# --
+private void OnTriggerEnter(Collider other)
+{
+    $0
+}

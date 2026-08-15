@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Unity|DrawLine
+# key: drawline
+# --
+Debug.DrawLine(Vector3 start$1, Vector3 end$2, Color color = Color.white$3, float duration = 0.0f$4, bool depthTest = true$5);
+$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Unity|LogFormat
+# key: logformat
+# --
+Debug.LogFormat($0);

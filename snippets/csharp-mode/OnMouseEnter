@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnMouseEnter
+# key: onmouseenter
+# --
+private void OnMouseEnter()
+{
+    $0
+}

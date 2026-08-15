@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Unity|Serializable
+# key: serializable
+# --
+[System.Serializable]
+$0

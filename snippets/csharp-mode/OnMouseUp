@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnMouseUp
+# key: onmouseup
+# --
+private void OnMouseUp()
+{
+    $0
+}

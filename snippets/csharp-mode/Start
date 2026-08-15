@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|Start
+# key: start
+# --
+private void Start()
+{
+    $0
+}

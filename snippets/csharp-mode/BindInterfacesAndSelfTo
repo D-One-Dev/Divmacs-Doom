@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Zenject|BindInterfacesAndSelfTo
+# key: bindinterfacesandselfto
+# --
+Container.BindInterfacesAndSelfTo<$1>()
+    .FromNew()
+    .AsSingle()
+    .NonLazy();
+$0

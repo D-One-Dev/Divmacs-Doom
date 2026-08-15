@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Unity|SerializeField
+# key: sfield
+# --
+[SerializeField] private $0;

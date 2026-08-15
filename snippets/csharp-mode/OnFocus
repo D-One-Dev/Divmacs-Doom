@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnFocus
+# key: onfocus
+# --
+private void OnFocus()
+{
+    $0
+}

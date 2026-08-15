@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|Update
+# key: update
+# --
+private void Update()
+{
+    $0
+}

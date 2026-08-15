@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Zenject|Bind WithId FromInstance AsCached
+# key: bindwithidfrominstanceascached
+# --
+Container.Bind<$1>()
+    .WithId("$2")
+    .FromInstance($3)
+    .AsCached();
+$0

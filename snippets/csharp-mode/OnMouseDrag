@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnMouseDrag
+# key: onmousedrag
+# --
+private void OnMouseDrag()
+{
+    $0
+}

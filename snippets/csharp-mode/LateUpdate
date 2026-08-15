@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|LateUpdate
+# key: lateupdate
+# --
+private void LateUpdate()
+{
+    $0
+}

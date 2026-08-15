@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|Awake
+# key: awake
+# --
+private void Awake()
+{
+    $0
+}

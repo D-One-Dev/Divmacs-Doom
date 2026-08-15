@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnTriggerExit
+# key: ontriggerecit
+# --
+private void OnTriggerExit(Collider other)
+{
+    $0
+}

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnEnable
+# key: onenable
+# --
+private void OnEnable()
+{
+    $0
+}

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Unity|OnMouseExit
+# key: onmouseexit
+# --
+private void OnMouseExit()
+{
+    $0
+}
