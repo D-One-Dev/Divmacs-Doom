@@ -1,80 +1,5 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets. It is optional.
-;; (setq user-full-name "John Doe"
-;;       user-mail-address "john@doe.com")
-
-;; Doom exposes five (optional) variables for controlling fonts in Doom:
-;;
-;; - `doom-font' -- the primary font to use
-;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;; - `doom-symbol-font' -- for symbols
-;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;;
-;; See 'C-h v doom-font' for documentation and more examples of what they
-;; accept. For example:
-;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-;;
-;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
-;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
-;; refresh your font settings. If Emacs still can't find your font, it likely
-;; wasn't installed correctly. Font issues are rarely Doom issues!
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-;;(setq doom-theme 'doom-one)
-;;(setq doom-theme 'doom-monokai-classic)
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
-
-;; Whenever you reconfigure a package, make sure to wrap your config in an
-;; `with-eval-after-load' block, otherwise Doom's defaults may override your
-;; settings. E.g.
-;;
-;;   (with-eval-after-load 'PACKAGE
-;;     (setq x y))
-;;
-;; The exceptions to this rule:
-;;
-;;   - Setting file/directory variables (like `org-directory')
-;;   - Setting variables which explicitly tell you to set them before their
-;;     package is loaded (see 'C-h v VARIABLE' to look them up).
-;;   - Setting doom variables (which start with 'doom-' or '+').
-;;
-;; Here are some additional functions/macros that will help you configure Doom.
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
-;; etc).
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
-
 ;; ---------------------------------------------------------
 ;; Font / theme
 ;; ---------------------------------------------------------
@@ -83,15 +8,17 @@
       doom-variable-pitch-font (font-spec :family "MartianMono Nerd Font" :size 14)
       doom-theme 'doom-monokai-classic)
 
-;; Slightly thicker window dividers
 (setq window-divider-default-right-width 4)
 (window-divider-mode 1)
 
 ;; ---------------------------------------------------------
 ;; Basic editing / GUI behaviour
 ;; ---------------------------------------------------------
+(setq org-directory "~/org/")
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+(setq display-line-numbers-type t)
 
 (setq-default
  cursor-type 'bar
@@ -123,19 +50,10 @@
 ;; History
 (add-to-list 'savehist-additional-variables 'kill-ring)
 
-;; Session persistence via persp-mode (the :ui workspaces module), instead of
-;; desktop.el. desktop-save-mode conflicts with persp-mode: it prompts "Save
-;; desktop?" on quit/restart, complains "Desktop file in use; not loaded" at
-;; daemon startup, and never restores buffers for the daemon+client workflow.
 (after! persp-mode
   (setq persp-auto-resume-time 5))
 
-;; When the last client frame is closed, persp-mode's `+workspaces'
-;; integration kills all buffers (and only autosaves on daemon exit, which
-;; never happens here). Instead, keep the buffers alive in the daemon and save
-;; the session, so reopening a client restores them instantly.
 (defadvice! +workspaces-preserve-session-on-last-frame-a (orig-fn &optional frame)
-  "Save the session, but keep its buffers, when the last client frame closes."
   :around #'+workspaces-delete-associated-workspace-h
   (if (null (cdr-safe (persp-frame-list-without-daemon)))
       (persp-save-state-to-file)
@@ -169,9 +87,6 @@
       "M-~" #'eval-buffer
       "s-m" #'magit)
 
-;; Cmd+Q closes the client frame without the "Close frame?" prompt. Calling
-;; `delete-frame' directly (not via the `[remap delete-frame]' keybinding)
-;; bypasses `doom/delete-frame-with-prompt'.
 (defun my/close-frame-or-quit ()
   (interactive)
   (if (daemonp)
@@ -347,21 +262,40 @@
         lsp-enable-snippet t
         lsp-completion-provider :capf))
 
-(after! lsp-csharp
-  (cl-defmethod lsp-execute-command (_server (_command (eql textDocument/references)) arguments)
-    (let ((params (if (and (vectorp arguments) (> (length arguments) 0))
-                      (aref arguments 0)
-                    (lsp--text-document-position-params))))
-      (lsp-request-async
-       "textDocument/references" params
-       (lambda (locations)
-         (if (seq-empty-p locations)
-             (lsp--error "Not found for: %s" (or (thing-at-point 'symbol t) ""))
-           (lsp-show-xrefs (lsp--locations-to-xref-items locations) nil t))))))
+(with-eval-after-load 'lsp-roslyn
+  (defun my/lsp-roslyn--find-solution-file ()
+    (let ((solutions (lsp-roslyn--find-files-in-parent-directories
+                      (file-name-directory (buffer-file-name))
+                      (rx (* anychar) "." (or "sln" "slnx") eos))))
+      (cond
+       ((not solutions) nil)
+       ((eq (length solutions) 1) (cl-first solutions))
+       (t (lsp-roslyn--pick-solution-file-interactively solutions)))))
 
-  (eval '(when-let ((csharp-ls-client (gethash 'csharp-ls lsp-clients)))
-           (setf (lsp--client-custom-capabilities csharp-ls-client)
-                 '((experimental . ((csharp . ((metadataUris . t))))))))))
+  (advice-add 'lsp-roslyn--find-solution-file :override #'my/lsp-roslyn--find-solution-file))
+
+(with-eval-after-load 'lsp-mode
+  (define-advice lsp--client-capabilities (:filter-return (caps) roslyn-pull-diagnostics-fix)
+    (when-let* ((text-document (alist-get 'textDocument caps))
+                (diagnostic    (alist-get 'diagnostic text-document)))
+      (setf (alist-get 'dynamicRegistration diagnostic) t))
+    caps))
+
+;; (after! lsp-csharp
+;;   (cl-defmethod lsp-execute-command (_server (_command (eql textDocument/references)) arguments)
+;;     (let ((params (if (and (vectorp arguments) (> (length arguments) 0))
+;;                       (aref arguments 0)
+;;                     (lsp--text-document-position-params))))
+;;       (lsp-request-async
+;;        "textDocument/references" params
+;;        (lambda (locations)
+;;          (if (seq-empty-p locations)
+;;              (lsp--error "Not found for: %s" (or (thing-at-point 'symbol t) ""))
+;;            (lsp-show-xrefs (lsp--locations-to-xref-items locations) nil t))))))
+
+;;   (eval '(when-let ((csharp-ls-client (gethash 'csharp-ls lsp-clients)))
+;;            (setf (lsp--client-custom-capabilities csharp-ls-client)
+;;                  '((experimental . ((csharp . ((metadataUris . t))))))))))
 
 (after! lsp-ui
   (setq lsp-ui-doc-enable t
