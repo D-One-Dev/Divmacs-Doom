@@ -59,6 +59,11 @@
       (persp-save-state-to-file)
     (funcall orig-fn frame)))
 
+;; Disabling format on save for specific minor modes
+
+(setq +format-on-save-disabled-modes
+      '(csharp-mode))
+
 ;; ---------------------------------------------------------
 ;; OS-specific modifiers
 ;; ---------------------------------------------------------
