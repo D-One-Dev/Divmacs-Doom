@@ -90,7 +90,8 @@
       "s-<up>" #'drag-stuff-up
       "s-<down>" #'drag-stuff-down
       "M-~" #'eval-buffer
-      "s-m" #'magit)
+      "s-m" #'magit
+      "s-f" #'rgrep)
 
 (defun my/close-frame-or-quit ()
   (interactive)
