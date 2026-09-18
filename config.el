@@ -100,6 +100,12 @@
     (save-buffers-kill-terminal)))
 (map! "s-q" #'my/close-frame-or-quit)
 
+(defun my/delete-word-forward (arg)
+  (interactive "p")
+  (delete-region (point) (progn (backward-word arg) (point))))
+
+(map! :g "<C-backspace>" #'my/delete-word-forward)
+
 ;; Mouse
 (map! [mouse-3] #'context-menu-open)
 
